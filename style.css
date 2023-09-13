@@ -1,9 +1,37 @@
-body {
-  background-color: white;
+h1 {
+  font-size: 50px;
+  font-weight: 400;
+  letter-spacing:4px;
+  color: #f8f8ff;
 }
 
-h1 {
-  background-color: gray;
-  color: white;
-  text-align: center;
+#weatherContent {
+  display: none;
+}
+
+.navbar {
+  height: 150px;
+}
+
+#cityDetails,
+#uvIndexColor,
+li {
+  color: #4D4F53!important;
+}
+
+#searchResults,
+#cityDetails,
+.card {
+  background-color: #5A6C73;
+}
+
+#searchResults {
+  height: 100;
+}
+
+#fiveDay .card {
+  border: 1px solid white;
+}
+p {
+  color: #D9B779;
 }
