@@ -1,10 +1,10 @@
 var today = moment().format('L');
-var apiKey = '51c7b424209c905646e12bcdbddb273';
+var apiKey = '1e9c62a7961bf04ecab4dcfa48e12b61';
 var searchHistory = [];
 
 
-function displayWeather(city) {
-    var requestUrl = 'https://api.openweathermap.org/data/2.5/weather?q=${city}&units=imperial&appid=${apiKey}';
+function currentWeather(city) {
+    var requestUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=imperial&appid=${apiKey}`;
    
     $.ajax({
         url: requestUrl,
@@ -16,21 +16,21 @@ function displayWeather(city) {
         $("#cityDetails").empty();
 
         var iconCode = cityWeatherResponse.weather[0].icon;
-        var iconUrl = 'https://openweathermap.org/img/w/${iconCode}.png';
+        var iconUrl = `https://openweathermap.org/img/w/${iconCode}.png`;
         var currentCity = $(`
         <h2 id="currentCity">
         ${cityWeatherResponse.name} ${today} <img src="${iconUrl}" alt="${cityWeatherResponse.weather[0].description}"/>
         </h2>
         <p>Temperature: ${cityWeatherResponse.main.temp} °F</p>
         <p>WindSpeed: ${cityWeatherResponse.wind.speed} MPH</p>
-        <p>Humidity: ${cityWeatherResponse.main.humidity} %</p>
+        <p>Humidity: ${cityWeatherResponse.main.humidity} \%</p>
         `);
 
         $("#cityDetails").append(currentCity);
 
         var lat = cityWeatherResponse.coord.lat;
         var lon = cityWeatherResponse.coord.lon;
-        var uvIndexUrl = 'https://api.openweathermap.org/data/2.5/forecast?lat={lat}&lon={lon}&appid={API key}';
+        var uvIndexUrl = `https://api.openweathermap.org/data/2.5/uvi?lat=${lat}&lon=${lon}&appid=${apiKey}`;
 
         $.ajax({
             url: uvIndexUrl,
@@ -41,7 +41,7 @@ function displayWeather(city) {
             var uvIndex = uviResponse.value;
             var uvIndexP = $(`
             <p>UV Index: 
-            <span id="uvIndexcolor" class="px-2 py-2 rounded">${uvIndex}</span
+            <span id="uvIndexcolor" class="px-2 py-2 rounded">${uvIndex}</span>
             </p>
         `);
 
@@ -61,9 +61,10 @@ function displayWeather(city) {
         };
     }); 
 });
+}
 
 function futureWeather(lat, lon) {
-    var futureWeatherURL = 'https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&units=imperial&exclude=current,minutely,hourly,alerts&appid=${apiKey';
+    var futureWeatherURL = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${apiKey}&units=imperial`;
 
     $.ajax({
         url: futureWeatherURL,
@@ -81,20 +82,20 @@ function futureWeather(lat, lon) {
             };
 
             var currentDate = moment.unix(cityInfo.date).format("MM/DD/YYYY");
-            var iconURL = '<img src="https://openweathermap.org/img/w/${cityInfo.icon}.png alt="${futureResponse.daily[i].weather[0].main}"/>';
+            var iconURL = `<img src="https://openweathermap.org/img/w/${cityInfo.icon}.png" alt="${futureResponse.daily[i].weather[0].main}" />`;
             var futureCard = $(`
             <div class="pl-3">
-                <div class="card pl-3 pt-3 mb-3 bg-primary text-light" style="width: 12rem">
+                <div class="card pl-3 pt-3 mb-3 bg-primary text-light" style="width: 12rem;>
                     <div class="card-body">
                     <h5>${currentDate}</h5>
-                    <p>$${iconURL}</p>
+                    <p>${iconURL}</p>
                     <p>Temperature: ${cityInfo.temp} °F </p>
-                    <p>Humidity: ${cityInfo.humidity} %</p>
+                    <p>Humidity: ${cityInfo.humidity} \%</p>
                 </div>
             </div>
         </div>
             `);
-            $("fiveDay").append(futureCard);
+            $("#fiveDay").append(futureCard);
         }
     });
 }
@@ -102,7 +103,7 @@ function futureWeather(lat, lon) {
 $("#searchBtn").on("click", function(event) {
     event.preventDefault();
 
-    var city = $("enterCity").val().trim();
+    var city = $("#enterCity").val().trim();
     currentWeather(city);
     if (!searchHistory.includes(city)){
         searchHistory.push(city);
