@@ -6,4 +6,4 @@ An application that utilizes third-party API, OpenWeather, to retrieve weather d
 <img width="800" alt="Screen Shot 2023-09-12 at 11 16 26 PM" src="https://github.com/adriennemadarang/Weather-Dashboard/assets/128556908/ab794ae8-d65c-43df-9d69-4f67e642746c">
 
 ## Link to Deployed Application
-https://github.com/adriennemadarang/Weather-Dashboard
+[https://github.com/adriennemadarang/Weather-Dashboard](https://adriennemadarang.github.io/Weather-Dashboard/)
